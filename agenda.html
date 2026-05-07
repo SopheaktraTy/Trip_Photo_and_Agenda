@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kompot Province — 2-Day Road Trip</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&family=Syne:wght@700;800&family=Outfit:wght@500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="hero-tag">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M3 11l19-9-9 19-2-8-8-2z" />
+                </svg>
+                Road Trip Agenda
+            </div>
+            <h1>Kompot<br /><em>Province</em></h1>
+
+        </div>
+    </header>
+
+    <!-- TABS NAVIGATION -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('dinner')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8h1a4 4 0 010 8h-1" />
+                <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+            </svg>
+            Dinner & House Rent Spend
+        </button>
+        <button class="tab-btn" onclick="switchTab('agenda')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 20l-5-5 5-5M20 20l-5-5 5-5" />
+            </svg>
+            Road Trip Agenda
+        </button>
+    </div>
+    <!-- TAB: DINNER & SPEND -->
+    <div id="dinner" class="tab-content active">
+        <div class="spend-container">
+            <div class="spend-header">
+                <div class="budget-info">
+                    <h3>Trip Budget</h3>
+                    <span class="budget-tag">$100.00 PER PERSON</span>
+                </div>
+
+            </div>
+
+            <div class="spend-table-wrap">
+                <table class="spend-table">
+                    <thead>
+                        <tr>
+                            <th style="width:40px;">#</th>
+                            <th>Expense Details</th>
+                            <th style="text-align:right;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">01.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">House Rent / Stay</div>
+                                    <div class="exp-sub">x2 Rooms @ សហគមន៍អេកូទេសចរណ៍នេសាទកំពង់សាមគ្គី</div>
+                                </div>
+                            </td>
+                            <td class="price">$30.00</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">02.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">Jinro Soju</div>
+                                    <div class="exp-sub">1x Carton (20 Bottles)</div>
+                                </div>
+                            </td>
+                            <td class="price">$46.00</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">03.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">Seafood</div>
+                                    <div class="exp-sub">2x Squid (2kg), 2x Prawn (2kg)</div>
+                                </div>
+                            </td>
+                            <td class="price">$20.00</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">04.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">Beef</div>
+                                    <div class="exp-sub">2x Australian beef type (2kg)</div>
+                                </div>
+                            </td>
+                            <td class="price">$20.00</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">05.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">Chicken</div>
+                                    <div class="exp-sub">3x Chicken wing (3kg)</div>
+                                </div>
+                            </td>
+                            <td class="price">$15.00</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">06.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">Vegetable</div>
+                                    <div class="exp-sub">Mushroom, corn, carrot, red pepper, onion, etc.</div>
+                                </div>
+                            </td>
+                            <td class="price">$8.00</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">07.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">Other Essentials</div>
+                                    <div class="exp-sub">ICE, Renting Griller Equipment, Coal</div>
+                                </div>
+                            </td>
+                            <td class="price">$5.00</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">08.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">Coca-Cola</div>
+                                    <div class="exp-sub">2x Coca 1.5L (3L Total)</div>
+                                </div>
+                            </td>
+                            <td class="price">$2.75</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">09.</td>
+                            <td>
+                                <div class="exp-info">
+                                    <div class="exp-name">Spy Wine Cooler</div>
+                                    <div class="exp-sub">4x Bottles</div>
+                                </div>
+                            </td>
+                            <td class="price">$9.20</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="border-top: 2px solid rgba(28, 26, 23, 0.1);">
+                        <tr>
+                            <td colspan="2"
+                                style="text-align:right; font-family:'Outfit'; font-weight:700; font-size:14px; color:var(--jungle); padding:24px 16px; letter-spacing:0.02em;">
+                                TOTAL ESTIMATED</td>
+                            <td class="price"
+                                style="font-size:20px; padding:24px 16px; color:var(--jungle); font-weight:800;">$155.95
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="payment-section">
+                <h4>Money Transfer</h4>
+                <p>Scan the code below to contribute to the shared trip fund.</p>
+                <div class="qr-card">
+                    <img src="images/QR_Payment.jpg" alt="ABA Payment QR Code">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: AGENDA -->
+    <div id="agenda" class="tab-content">
+        <div class="roadmap">
+            <div class="road-spine"></div>
+
+            <!-- ══ DAY 1 ══ -->
+            <div class="day-marker">
+                <div class="day-marker-inner">Day 1 · Arrival & Old Town</div>
+            </div>
+
+            <!-- Stop 0 — Gathering at technology (ITC) -->
+            <div class="stop-row right">
+                <div class="stop-spacer"></div>
+                <div class="stop-pin">
+                    <div class="pin-dot sight"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="images/itc_gathering.png" alt="Institute of Technology of Cambodia"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-sight">Gathering</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                8:00 AM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Gathering at ITC (Technology)</p>
+                            <p class="card-desc">Gathering at the Institute of Technology of Cambodia main gate. Please
+                                complete your breakfast beforehand. <strong>The motor trip officially starts at 8:20
+                                    AM.</strong></p>
+                            <div class="links">
+                                <a class="lbtn btn-gm" href="https://maps.app.goo.gl/zU7r9tcSQ96YXe1Q9" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>Maps
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dist-badge">
+                <div class="dist-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    ~3.5 hours drive to Kompot
+                </div>
+            </div>
+
+            <!-- Stop 0.5 — Lunch in Kompot -->
+            <div class="stop-row left">
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80"
+                                alt="Khmer Seafood Lunch"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-dinner">Lunch</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                12:00 PM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Riverside Seafood Lunch</p>
+                            <p class="card-desc">Stop for a fresh seafood lunch by the Prek Kampot river. Try the
+                                signature stir-fried squid with green Kampot pepper.</p>
+                            <div class="links">
+                                <a class="lbtn btn-tt"
+                                    href="https://www.tiktok.com/search?q=kompot+riverside+restaurant" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.85a8.18 8.18 0 004.79 1.52V6.91a4.85 4.85 0 01-1.02-.22z" />
+                                    </svg>TikTok
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stop-pin">
+                    <div class="pin-dot dinner"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-spacer"></div>
+            </div>
+
+            <div class="dist-badge">
+                <div class="dist-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    5 min to Old Town
+                </div>
+            </div>
+
+            <!-- Stop 0.6 — Drop off stuff -->
+            <div class="stop-row right">
+                <div class="stop-spacer"></div>
+                <div class="stop-pin">
+                    <div class="pin-dot hotel"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80"
+                                alt="Guesthouse Check-in"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-hotel">Hotel · Drop-off</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                1:00 PM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Drop off stuff @សហគមន៍អេកូទេសចរណ៍នេសាទកំពង់សាមគ្គី</p>
+                            <p class="card-desc">Quickly drop off your bags and gear at the community guesthouse before
+                                heading out for the afternoon adventures.</p>
+                            <div class="links">
+                                <a class="lbtn btn-gm" href="https://maps.app.goo.gl/zNVzWTPsyoEbLRf96" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>Maps
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stop 1 — Kompot Old Town -->
+            <div class="stop-row left">
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
+                                alt="Kompot Old Town riverside"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-sight">Sightseeing</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                4:00 PM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Kompot Old Town</p>
+                            <p class="card-desc">Stroll along the Prek Kampot riverfront lined with French colonial
+                                villas,
+                                pepper stalls, and durian trees. The Roundabout Fish statue is a classic photo spot.</p>
+                            <div class="links">
+                                <a class="lbtn btn-tt" href="https://www.tiktok.com/search?q=kompot+old+town+cambodia"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.85a8.18 8.18 0 004.79 1.52V6.91a4.85 4.85 0 01-1.02-.22z" />
+                                    </svg>TikTok
+                                </a>
+                                <a class="lbtn btn-fb" href="https://www.facebook.com/search/top?q=kompot+old+town"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                    </svg>Facebook
+                                </a>
+                                <a class="lbtn btn-gm"
+                                    href="https://www.google.com/maps/search/Kompot+Old+Town+Cambodia" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>Maps
+                                </a>
+                                <a class="lbtn btn-cv" href="https://www.canva.com/search/templates?q=cambodia+travel"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+                                    </svg>Canva
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stop-pin">
+                    <div class="pin-dot sight"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-spacer"></div>
+            </div>
+
+            <div class="dist-badge">
+                <div class="dist-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    10 min south by tuk-tuk
+                </div>
+            </div>
+
+            <!-- Stop 2 — Bokor Hill Station -->
+            <div class="stop-row right">
+                <div class="stop-spacer"></div>
+                <div class="stop-pin">
+                    <div class="pin-dot sight"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80"
+                                alt="Bokor Hill misty mountains"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-sight">Nature</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                1:30 PM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Bokor Hill Station</p>
+                            <p class="card-desc">A haunting French colonial retreat draped in mist at 1,079 m. Explore
+                                the
+                                ghost palace, old Catholic church, and panoramic views over the Gulf of Thailand.</p>
+                            <div class="links">
+                                <a class="lbtn btn-tt" href="https://www.tiktok.com/search?q=bokor+hill+kompot+cambodia"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.85a8.18 8.18 0 004.79 1.52V6.91a4.85 4.85 0 01-1.02-.22z" />
+                                    </svg>TikTok
+                                </a>
+                                <a class="lbtn btn-fb"
+                                    href="https://www.facebook.com/search/top?q=bokor+hill+station+kompot"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                    </svg>Facebook
+                                </a>
+                                <a class="lbtn btn-gm"
+                                    href="https://www.google.com/maps/search/Bokor+Hill+Station+Kampot+Cambodia"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>Maps
+                                </a>
+                                <a class="lbtn btn-cv"
+                                    href="https://www.canva.com/search/templates?q=mountain+nature+travel"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+                                    </svg>Canva
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dist-badge">
+                <div class="dist-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    Back to town · 20 min
+                </div>
+            </div>
+
+            <!-- Stop 2.5 — Sunset River Cruise -->
+            <div class="stop-row left">
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1544735749-2e9057f56341?w=600&q=80"
+                                alt="Sunset river cruise Kompot"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-sight">Experience</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                5:30 PM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Sunset Firefly Cruise</p>
+                            <p class="card-desc">Board a longtail boat for a peaceful sunset cruise. Watch the sky turn
+                                gold over the Elephant Mountains and see fireflies light up the mangroves after dark.
+                            </p>
+                            <div class="links">
+                                <a class="lbtn btn-tt"
+                                    href="https://www.tiktok.com/search?q=kompot+sunset+cruise+firefly" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.85a8.18 8.18 0 004.79 1.52V6.91a4.85 4.85 0 01-1.02-.22z" />
+                                    </svg>TikTok
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stop-pin">
+                    <div class="pin-dot sight"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-spacer"></div>
+            </div>
+
+            <div class="dist-badge">
+                <div class="dist-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    5 min walk to dinner
+                </div>
+            </div>
+
+            <!-- Stop 3 — Dinner Day 1 -->
+            <div class="stop-row left">
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80"
+                                alt="Khmer dinner food Cambodia"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-dinner">Dinner</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                7:00 PM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Epic Arts Café, Kompot</p>
+                            <p class="card-desc">A beloved riverside spot — prepared Khmer set meals with amok fish,
+                                lemongrass curry, and freshly baked breads. Great garden setting with river views.</p>
+                            <div class="links">
+                                <a class="lbtn btn-tt"
+                                    href="https://www.tiktok.com/search?q=kompot+restaurant+cambodia+food"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.85a8.18 8.18 0 004.79 1.52V6.91a4.85 4.85 0 01-1.02-.22z" />
+                                    </svg>TikTok
+                                </a>
+                                <a class="lbtn btn-fb"
+                                    href="https://www.facebook.com/search/top?q=epic+arts+cafe+kompot" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                    </svg>Facebook
+                                </a>
+                                <a class="lbtn btn-gm"
+                                    href="https://www.google.com/maps/search/Epic+Arts+Cafe+Kampot+Cambodia"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>Maps
+                                </a>
+                                <a class="lbtn btn-cv"
+                                    href="https://www.canva.com/search/templates?q=khmer+food+cambodia" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+                                    </svg>Canva
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stop-pin">
+                    <div class="pin-dot dinner"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-spacer"></div>
+            </div>
+
+            <!-- ══ DAY 2 ══ -->
+            <div class="day-marker">
+                <div class="day-marker-inner">Day 2 · Beach & Kep Border</div>
+            </div>
+
+            <!-- Stop 4 — Hotel -->
+            <div class="stop-row right">
+                <div class="stop-spacer"></div>
+                <div class="stop-pin">
+                    <div class="pin-dot hotel"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80"
+                                alt="Guesthouse Kompot Cambodia"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-hotel">Hotel · Stay</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                Check-out 11 AM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">សហគមន៍អេកូទេសចរណ៍នេសាទកំពង់សាមគ្គី, Kompot</p>
+                            <p class="card-desc">Charming colonial-style riverside guesthouse with lush garden and
+                                rooftop.
+                                From $25/night. Central location — walk to markets, cafés, and the river in minutes.</p>
+                            <div class="links">
+                                <a class="lbtn btn-tt" href="https://www.tiktok.com/search?q=kompot+guesthouse+cambodia"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.85a8.18 8.18 0 004.79 1.52V6.91a4.85 4.85 0 01-1.02-.22z" />
+                                    </svg>TikTok
+                                </a>
+                                <a class="lbtn btn-fb"
+                                    href="https://www.facebook.com/search/top?q=សហគមន៍អេកូទេសចរណ៍នេសាទកំពង់សាមគ្គី"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                    </svg>Facebook
+                                </a>
+                                <a class="lbtn btn-gm"
+                                    href="https://www.google.com/maps/search/guesthouse+Kampot+Cambodia+riverside"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>Maps
+                                </a>
+                                <a class="lbtn btn-cv"
+                                    href="https://www.canva.com/search/templates?q=hotel+travel+itinerary"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+                                    </svg>Canva
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dist-badge">
+                <div class="dist-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    25 min east · Kep coastal road
+                </div>
+            </div>
+
+            <!-- Stop 5 — Kep Beach -->
+            <div class="stop-row left">
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80"
+                                alt="Kep beach Cambodia coast"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-beach">Beach</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                10:00 AM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Kep Beach & Crab Market</p>
+                            <p class="card-desc">Relax on the quiet Gulf of Thailand beach, then head to the famous Kep
+                                Crab
+                                Market for fresh blue crabs with Kampot pepper sauce — a Cambodian coastal classic.</p>
+                            <div class="links">
+                                <a class="lbtn btn-tt" href="https://www.tiktok.com/search?q=kep+beach+cambodia+crab"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.85a8.18 8.18 0 004.79 1.52V6.91a4.85 4.85 0 01-1.02-.22z" />
+                                    </svg>TikTok
+                                </a>
+                                <a class="lbtn btn-fb"
+                                    href="https://www.facebook.com/search/top?q=kep+beach+crab+market+cambodia"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                    </svg>Facebook
+                                </a>
+                                <a class="lbtn btn-gm"
+                                    href="https://www.google.com/maps/search/Kep+Beach+Crab+Market+Cambodia"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>Maps
+                                </a>
+                                <a class="lbtn btn-cv"
+                                    href="https://www.canva.com/search/templates?q=beach+travel+poster" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+                                    </svg>Canva
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stop-pin">
+                    <div class="pin-dot sight"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-spacer"></div>
+            </div>
+
+            <div class="dist-badge">
+                <div class="dist-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    Back to Kompot · 25 min
+                </div>
+            </div>
+
+            <!-- Stop 6 — Dinner Day 2 -->
+            <div class="stop-row right">
+                <div class="stop-spacer"></div>
+                <div class="stop-pin">
+                    <div class="pin-dot dinner"></div>
+                    <div class="pin-line"></div>
+                </div>
+                <div class="stop-card-wrap">
+                    <div class="stop-card">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80"
+                                alt="Cambodian grilled seafood dinner"
+                                onerror="this.parentNode.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span>Add photo</span></div>'" />
+                            <span class="type-tag tag-dinner">Dinner</span>
+                            <span class="time-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                7:00 PM
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-name">Rikitikitavi Restaurant, Kompot</p>
+                            <p class="card-desc">Riverside terrace dining with firefly views. Signature Kampot pepper
+                                grilled prawns, fish amok, and fresh coconut cocktails — fully prepared and served al
+                                fresco.</p>
+                            <div class="links">
+                                <a class="lbtn btn-tt"
+                                    href="https://www.tiktok.com/search?q=rikitikitavi+kompot+cambodia" target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.85a8.18 8.18 0 004.79 1.52V6.91a4.85 4.85 0 01-1.02-.22z" />
+                                    </svg>TikTok
+                                </a>
+                                <a class="lbtn btn-fb" href="https://www.facebook.com/search/top?q=rikitikitavi+kompot"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                    </svg>Facebook
+                                </a>
+                                <a class="lbtn btn-gm"
+                                    href="https://www.google.com/maps/search/Rikitikitavi+Kampot+Cambodia"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>Maps
+                                </a>
+                                <a class="lbtn btn-cv"
+                                    href="https://www.canva.com/search/templates?q=seafood+dinner+restaurant"
+                                    target="_blank">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+                                    </svg>Canva
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End Flag -->
+            <div class="end-flag">
+                <div class="flag-pole"></div>
+                <div class="flag-icon">End of Trip · Safe Travels!</div>
+            </div>
+
+        </div> <!-- Close roadmap -->
+    </div>
+
+
+    <!-- Script to handle switching -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        /* ── Page Navigation Scroll (Top ONLY) ── */
+        (function () {
+            let scrollAccum = 0;
+            const THRESHOLD = 500;   /* Deliberate threshold for going back */
+            let navigating = false;
+
+            /* Progress Bar */
+            const bar = document.createElement('div');
+            bar.style.cssText = `
+                position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+                background: linear-gradient(to right, #8fbe6b, #e8a84a);
+                z-index: 10000; transition: width 0.1s ease;
+                border-radius: 0 4px 4px 0; pointer-events: none;
+            `;
+            document.body.appendChild(bar);
+
+            /* Hint Label */
+            const hint = document.createElement('div');
+            hint.style.cssText = `
+                position: fixed; left: 50%; top: 24px; transform: translateX(-50%);
+                font-family: Karla, sans-serif; font-size: 11px;
+                letter-spacing: 0.15em; text-transform: uppercase;
+                color: rgba(143,190,107,0); transition: color 0.3s ease, opacity 0.3s ease;
+                z-index: 10000; pointer-events: none; white-space: nowrap;
+            `;
+            document.body.appendChild(hint);
+
+            let resetTimer = null;
+
+            function isAtTop() { return window.scrollY <= 5; }
+
+            function advance(delta) {
+                if (navigating) return;
+
+                const atTop = isAtTop();
+
+                /* Only accumulate when scrolling UP at the TOP */
+                if (atTop && delta < 0) {
+                    scrollAccum += Math.abs(delta);
+                } else {
+                    scrollAccum = Math.max(0, scrollAccum - Math.abs(delta) * 0.8);
+                    const pct = Math.min(scrollAccum / THRESHOLD * 100, 100);
+                    bar.style.width = pct + '%';
+                    if (scrollAccum === 0) hint.style.color = 'rgba(143,190,107,0)';
+                    return;
+                }
+
+                hint.textContent = 'Keep scrolling ↑ Invitation';
+                const pct = Math.min(scrollAccum / THRESHOLD * 100, 100);
+                bar.style.width = pct + '%';
+
+                if (pct > 5) {
+                    hint.style.color = 'rgba(143,190,107,0.8)';
+                }
+
+                clearTimeout(resetTimer);
+                resetTimer = setTimeout(() => {
+                    scrollAccum = 0;
+                    bar.style.width = '0%';
+                    hint.style.color = 'rgba(143,190,107,0)';
+                }, 800);
+
+                if (scrollAccum >= THRESHOLD) {
+                    navigating = true;
+                    bar.style.transition = 'width 0.2s ease';
+                    bar.style.width = '100%';
+                    hint.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.4s ease';
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { window.location.href = 'index.html'; }, 400);
+                }
+            }
+
+            /* Event Listeners */
+            window.addEventListener('wheel', (e) => advance(e.deltaY), { passive: true });
+
+            let ty0 = null;
+            window.addEventListener('touchstart', (e) => { ty0 = e.touches[0].clientY; }, { passive: true });
+            window.addEventListener('touchmove', (e) => {
+                if (ty0 === null) return;
+                const dy = ty0 - e.touches[0].clientY;
+                ty0 = e.touches[0].clientY;
+                advance(dy * 2.5);
+            }, { passive: true });
+            window.addEventListener('touchend', () => { ty0 = null; }, { passive: true });
+
+            window.addEventListener('keydown', (e) => {
+                if (['ArrowUp', 'PageUp'].includes(e.key) && isAtTop()) advance(-80);
+            });
+        })();
+
+
+
+    </script>
+</body>
+
+</html>
