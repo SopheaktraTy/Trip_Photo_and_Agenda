@@ -9,7 +9,50 @@
         href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&family=Syne:wght@700;800&family=Outfit:wght@500;600;700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
+<style>
+  body{
+    background:#f4f4f4;
+    font-family:Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+  }
 
+  .notice-card{
+    background:#fff;
+    width:350px;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    border-left:8px solid #e63946;
+    text-align:center;
+  }
+
+  .notice-icon{
+    font-size:45px;
+    color:#e63946;
+    margin-bottom:10px;
+  }
+
+  .notice-title{
+    font-size:24px;
+    font-weight:bold;
+    color:#e63946;
+    margin-bottom:12px;
+  }
+
+  .notice-text{
+    font-size:17px;
+    color:#333;
+    line-height:1.6;
+  }
+
+  .highlight{
+    font-weight:bold;
+    color:#d00000;
+  }
+</style>
 </head>
 
 <body>
@@ -199,9 +242,17 @@
                     </div>
                 </div>
             </div>
-<p style="color:red; font-weight:bold;">
-  Notice: Ket Kalim is banned from participating in this trip.
-</p>
+<div class="notice-card">
+  <div class="notice-icon">⚠️</div>
+  
+  <div class="notice-title">
+    Travel Notice
+  </div>
+
+  <div class="notice-text">
+    <span class="highlight">Ket Kalim</span> is banned from participating in this trip.
+  </div>
+</div>
             <!-- ── PAYMENT RECEIVED LIST ── -->
             <div class="received-section">
                 <div class="received-header">
