@@ -269,7 +269,7 @@
                       
                         <span>Payment Received</span>
                     </div>
-                    <span class="received-count">2 / 10 paid</span>
+                    <span class="received-count">3 / 10 paid</span>
                 </div>
 
                 <div class="received-list">
@@ -316,12 +316,33 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Person 3 -->
+                    <div class="received-row">
+                        <div class="received-info">
+                            <div class="received-name">Oknha Oeurn Sokny</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(3).jpg" alt="Payment Receipt 3" class="receipt-img">
+                            </div>
+                        </div>
+                    </div>
                 </div><!-- /.received-list -->
 
                 <!-- Footer total -->
                 <div class="received-footer">
                     <span class="received-footer-label"> Total Collected</span>
-                    <span class="received-footer-total">$30.00</span>
+                    <span class="received-footer-total">$45.00</span>
                 </div>
             </div>
 
