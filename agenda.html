@@ -269,7 +269,7 @@
                       
                         <span>Payment Received</span>
                     </div>
-                    <span class="received-count">4 / 10 paid</span>
+                    <span class="received-count">9 / 10 paid</span>
                 </div>
 
                 <div class="received-list">
@@ -281,7 +281,7 @@
                         <div class="received-amount">
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span class="amount-val">$15.00</span>
-                                <button class="view-receipt-btn" onclick="openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
@@ -290,7 +290,16 @@
                             </div>
                             <span class="paid-badge">✓ Paid</span>
                             <div class="receipt-container" style="display:none;">
-                                <img src="images/Payment(1).jpg" alt="Payment Receipt 1" class="receipt-img">
+                                <img src="images/Payment(1).jpg" alt="Payment Receipt 1" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -303,7 +312,7 @@
                         <div class="received-amount">
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span class="amount-val">$15.00</span>
-                                <button class="view-receipt-btn" onclick="openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
@@ -312,7 +321,16 @@
                             </div>
                             <span class="paid-badge">✓ Paid</span>
                             <div class="receipt-container" style="display:none;">
-                                <img src="images/Payment(2).jpg" alt="Payment Receipt 2" class="receipt-img">
+                                <img src="images/Payment(2).jpg" alt="Payment Receipt 2" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -324,7 +342,7 @@
                         <div class="received-amount">
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span class="amount-val">$15.00</span>
-                                <button class="view-receipt-btn" onclick="openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
@@ -333,7 +351,16 @@
                             </div>
                             <span class="paid-badge">✓ Paid</span>
                             <div class="receipt-container" style="display:none;">
-                                <img src="images/Payment(3).jpg" alt="Payment Receipt 3" class="receipt-img">
+                                <img src="images/Payment(3).jpg" alt="Payment Receipt 3" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -354,7 +381,171 @@
                             </div>
                             <span class="paid-badge">✓ Paid</span>
                             <div class="receipt-container" style="display:none;">
-                                <img src="images/Payment(4).jpg" alt="Payment Receipt 4" class="receipt-img">
+                                <img src="images/Payment(4).jpg" alt="Payment Receipt 4" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Person 5 -->
+                    <div class="received-row" onclick="openModal(this.querySelector('.receipt-container'))" style="cursor:pointer;" title="Click to view receipt">
+                        <div class="received-info">
+                            <div class="received-name">Oknha Yim Somethea</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(5).jpg" alt="Payment Receipt 5" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Person 6 -->
+                    <div class="received-row" onclick="openModal(this.querySelector('.receipt-container'))" style="cursor:pointer;" title="Click to view receipt">
+                        <div class="received-info">
+                            <div class="received-name">Lok Chumteav Heng Kanika</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(6).jpg" alt="Payment Receipt 6" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Person 7 -->
+                    <div class="received-row" onclick="openModal(this.querySelector('.receipt-container'))" style="cursor:pointer;" title="Click to view receipt">
+                        <div class="received-info">
+                            <div class="received-name">Lok Bandet Pov Sokpheakdey</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(7).jpg" alt="Payment Receipt 7" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Person 8 -->
+                    <div class="received-row" onclick="openModal(this.querySelector('.receipt-container'))" style="cursor:pointer;" title="Click to view receipt">
+                        <div class="received-info">
+                            <div class="received-name">Oknha Eng Serey Leak</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(8).jpg" alt="Payment Receipt 8" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Person 9 -->
+                    <div class="received-row" onclick="openModal(this.querySelector('.receipt-container'))" style="cursor:pointer;" title="Click to view receipt">
+                        <div class="received-info">
+                            <div class="received-name">Youvochon Sava Ket Kalim</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(9).jpg" alt="Payment Receipt 9" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -363,7 +554,7 @@
                 <!-- Footer total -->
                 <div class="received-footer">
                     <span class="received-footer-label"> Total Collected</span>
-                    <span class="received-footer-total">$60.00</span>
+                    <span class="received-footer-total">$135.00</span>
                 </div>
             </div>
 
@@ -689,34 +880,46 @@
                             <style>
                                 .bfast-tabs {
                                     display: flex;
-                                    gap: 6px;
-                                    margin: 12px 0 10px;
+                                    gap: 8px;
+                                    margin: 14px 0 14px;
                                     flex-wrap: wrap;
                                 }
                                 .bfast-tab {
                                     flex: 1;
                                     min-width: 70px;
-                                    padding: 6px 10px;
-                                    border: 1.5px solid rgba(143,190,107,0.3);
-                                    border-radius: 10px;
-                                    background: transparent;
+                                    padding: 10px 14px;
+                                    border: 2px solid rgba(143,190,107,0.35);
+                                    border-radius: 12px;
+                                    background: rgba(143,190,107,0.06);
                                     color: var(--muted);
                                     font-family: 'Outfit', sans-serif;
-                                    font-size: 12px;
-                                    font-weight: 600;
+                                    font-size: 12.5px;
+                                    font-weight: 700;
                                     cursor: pointer;
                                     transition: all 0.2s ease;
                                     white-space: nowrap;
+                                    box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+                                    position: relative;
+                                    text-align: center;
+                                    letter-spacing: 0.02em;
                                 }
                                 .bfast-tab:hover {
                                     border-color: var(--jungle);
                                     color: var(--jungle);
-                                    background: rgba(143,190,107,0.08);
+                                    background: rgba(143,190,107,0.12);
+                                    box-shadow: 0 4px 12px rgba(143,190,107,0.2), 0 2px 4px rgba(0,0,0,0.06);
+                                    transform: translateY(-1px);
+                                }
+                                .bfast-tab:active {
+                                    transform: translateY(1px);
+                                    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
                                 }
                                 .bfast-tab.active {
-                                    background: var(--jungle);
+                                    background: linear-gradient(135deg, var(--jungle), #6ab04c);
                                     color: #fff;
                                     border-color: var(--jungle);
+                                    box-shadow: 0 4px 14px rgba(143,190,107,0.35), 0 2px 4px rgba(0,0,0,0.08);
+                                    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
                                 }
                                 .bfast-panel {
                                     display: none;
