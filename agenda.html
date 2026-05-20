@@ -103,14 +103,24 @@
                                 <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">02.</td>
                                 <td>
                                     <div class="exp-info">
-                                        <div class="exp-name">Other Essentials</div>
-                                        <div class="exp-sub">ICE, Renting Griller Equipment, Coal, Plastic cups, Plastic plates, etc.</div>
+                                        <div class="exp-name">Rice and Griller Equipment</div>
+                                        <div class="exp-sub">Rice, Renting Griller Equipment, Coal</div>
                                     </div>
                                 </td>
-                                <td class="price">$5.00</td>
+                                <td class="price">$10.00</td>
                             </tr>
                             <tr>
                                 <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">03.</td>
+                                <td>
+                                    <div class="exp-info">
+                                        <div class="exp-name">Other Essentials</div>
+                                        <div class="exp-sub">Plastic cups, Plastic plates, ICE,</div>
+                                    </div>
+                                </td>
+                                <td class="price">$10.00</td>
+                            </tr>
+                            <tr>
+                                <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">04.</td>
                                 <td>
                                     <div class="exp-info">
                                         <div class="exp-name">Ganzberg beer 330ml</div>
@@ -120,29 +130,39 @@
                                 <td class="price">$30.00</td>
                             </tr>
                             <tr>
-                                <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">04.</td>
-                                <td>
-                                    <div class="exp-info">
-                                        <div class="exp-name">Seafood</div>
-                                        <div class="exp-sub">2x Squid (2kg), 2x Prawn (2kg)</div>
-                                    </div>
-                                </td>
-                                <td class="price">$30.00</td>
-                            </tr>
-                            <tr>
                                 <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">05.</td>
                                 <td>
                                     <div class="exp-info">
-                                        <div class="exp-name">Meat & Vegetables BBQ</div>
-                                        <div class="exp-sub">Beef (2kg), Chicken Wings (2kg), Mushroom, Corn, Carrot, etc.
-                                        </div>
+                                        <div class="exp-name">Seafood</div>
+                                        <div class="exp-sub">3x Squid (2.5kg) 18.125$, 3x Prawn (3kg) 22.5$</div>
                                     </div>
                                 </td>
-                                <td class="price">$35.00</td>
+                                <td class="price">$40.625</td>
+                            </tr>
+                            <tr>
+                                <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">06.</td>
+                                <td>
+                                    <div class="exp-info">
+                                        <div class="exp-name">Meat & Chicken (BBQ)</div>
+                                        <div class="exp-sub">Beef (3kg) $28.50, Chicken Wings (3kg) $16.50</div>
+                                    </div>
+                                </td>
+                                <td class="price">$45.00</td>
                             </tr>
 
                             <tr>
-                                <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">06.</td>
+                                <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">07.</td>
+                                <td>
+                                    <div class="exp-info">
+                                        <div class="exp-name">Vegetable & Seasoning</div>
+                                        <div class="exp-sub">Mushroom, Corn, Carrot, Onion, Salad, Sea Sauce, Red Pepper, etc.</div>
+                                    </div>
+                                </td>
+                                <td class="price">$10.00</td>
+                            </tr>
+
+                            <tr>
+                                <td style="color:var(--muted); font-family:'Outfit'; font-weight:600;">08.</td>
                                 <td>
                                     <div class="exp-info">
                                         <div class="exp-name">Coca-Cola</div>
@@ -159,7 +179,7 @@
                                     style="text-align:right; font-family:'Outfit'; font-weight:700; font-size:14px; color:var(--jungle); padding:24px 16px; letter-spacing:0.02em;">
                                     TOTAL ESTIMATED</td>
                                 <td class="price"
-                                    style="font-size:20px; padding:24px 16px; color:var(--jungle); font-weight:800;">$147.75
+                                    style="font-size:20px; padding:24px 16px; color:var(--jungle); font-weight:800;">$193.375
                                 </td>
                             </tr>
                         </tfoot>
@@ -269,7 +289,7 @@
                       
                         <span>Payment Received</span>
                     </div>
-                    <span class="received-count">9 / 10 paid</span>
+                    <span class="received-count">12 / 12 paid</span>
                 </div>
 
                 <div class="received-list">
@@ -549,12 +569,105 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Person 10 -->
+                    <div class="received-row" onclick="openModal(this.querySelector('.receipt-container'))" style="cursor:pointer;" title="Click to view receipt">
+                        <div class="received-info">
+                            <div class="received-name">Lok Chumteav Heang Sreymalis</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(10).jpg" alt="Payment Receipt 10" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Person 11 -->
+                    <div class="received-row" onclick="openModal(this.querySelector('.receipt-container'))" style="cursor:pointer;" title="Click to view receipt">
+                        <div class="received-info">
+                            <div class="received-name">Lok Chumteav Bun Sokpanha</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(11).jpg" alt="Payment Receipt 11" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Person 12 -->
+                    <div class="received-row" onclick="openModal(this.querySelector('.receipt-container'))" style="cursor:pointer;" title="Click to view receipt">
+                        <div class="received-info">
+                            <div class="received-name">Lok Chumteav Srey Daly</div>
+                        </div>
+                        <div class="received-amount">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="amount-val">$15.00</span>
+                                <button class="view-receipt-btn" onclick="event.stopPropagation(); openModal(this.parentElement.nextElementSibling.nextElementSibling)" title="View Receipt" style="margin-top:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="paid-badge">✓ Paid</span>
+                            <div class="receipt-container" style="display:none;">
+                                <img src="images/Payment(12).jpg" alt="Payment Receipt 12" class="receipt-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="receipt-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; background:#f9fafb; border:2px dashed #cbd5e1; border-radius:16px; color:#475569; font-family:'Karla',sans-serif; text-align:center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:48px; height:48px; margin-bottom:12px; color:#94a3b8; display:block; margin-left:auto; margin-right:auto;">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span style="font-weight:600; font-size:14px; margin-bottom:4px; font-family:'Outfit',sans-serif; display:block;">No Receipt Image Yet</span>
+                                    <span style="font-size:12px; color:#94a3b8; text-align:center; max-width:240px; line-height:1.5; display:block;">The receipt photo will be visible once uploaded to the server.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div><!-- /.received-list -->
 
                 <!-- Footer total -->
                 <div class="received-footer">
                     <span class="received-footer-label"> Total Collected</span>
-                    <span class="received-footer-total">$135.00</span>
+                    <span class="received-footer-total">$180.00</span>
                 </div>
             </div>
 
