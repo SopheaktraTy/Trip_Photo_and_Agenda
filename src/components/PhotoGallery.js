@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 const isVideoUrl = (url) => {
   if (!url) return false;
@@ -14,6 +15,8 @@ const isVideoItem = (item) =>
 const videoSrc = (url) => (url ? `${url}#t=0.5` : url);
 
 const PER_PAGE_OPTIONS = [10, 15, 20];
+
+const SLIDESHOW_INTERVAL = 4000; // ms per slide
 
 // Smart page number array: [1, "...", 4, 5, 6, "...", 12]
 function getPageNumbers(current, total) {
@@ -30,13 +33,27 @@ function getPageNumbers(current, total) {
 }
 
 export default function PhotoGallery({ photos, isLoading, onRefresh }) {
-  const [selected,   setSelected]   = useState(null);
-  const [activeTab,  setActiveTab]  = useState("all");
-  const [perPage,    setPerPage]    = useState(10);
-  const [page,       setPage]       = useState(1);
+  const [selected,      setSelected]      = useState(null);
+  const [activeTab,     setActiveTab]     = useState("all");
+  const [perPage,       setPerPage]       = useState(10);
+  const [page,          setPage]          = useState(1);
   const [isPerPageOpen, setIsPerPageOpen] = useState(false);
+  const [fabOpen,       setFabOpen]       = useState(false);
   const perPageRef = useRef(null);
 
+  // ── Slideshow state ──────────────────────────────────────────────────────
+  const [slideshowOpen,    setSlideshowOpen]    = useState(false);
+  const [slideshowOrder,   setSlideshowOrder]   = useState([]);
+  const [slideshowIdx,     setSlideshowIdx]     = useState(0);
+  const [slideshowPlaying, setSlideshowPlaying] = useState(true);
+  const [slideshowProg,    setSlideshowProg]    = useState(0);   // 0-100
+  const slideshowTimer  = useRef(null);
+  const progressTimer   = useRef(null);
+
+  // ── Random memory toast ──────────────────────────────────────────────────
+  const [randomToast, setRandomToast] = useState(false);
+
+  // ── Close per-page dropdown on outside click ─────────────────────────────
   useEffect(() => {
     function handleClickOutside(event) {
       if (perPageRef.current && !perPageRef.current.contains(event.target)) {
@@ -46,6 +63,25 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // ── Keyboard: Escape closes slideshow / lightbox ─────────────────────────
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === "Escape") {
+        setSlideshowOpen(false);
+        setSelected(null);
+      }
+      if (slideshowOpen) {
+        if (e.key === "ArrowRight") advanceSlide(1);
+        if (e.key === "ArrowLeft")  advanceSlide(-1);
+        if (e.key === " ") { e.preventDefault(); setSlideshowPlaying(p => !p); }
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slideshowOpen]);
+
   const formatDate = (d) => {
     try {
       return new Date(d).toLocaleDateString("en-US", {
@@ -72,8 +108,77 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
   const showingTo   = Math.min(startIdx + perPage, filtered.length);
   const pageNumbers = getPageNumbers(safePage, totalPages);
 
-  const switchTab    = (tab) => { setActiveTab(tab); setPage(1); };
-  const switchPerPage = (n)  => { setPerPage(n);    setPage(1); };
+  const switchTab     = (tab) => { setActiveTab(tab); setPage(1); };
+  const switchPerPage = (n)   => { setPerPage(n);     setPage(1); };
+
+  // ── Random Memory ─────────────────────────────────────────────────────────
+  const openRandomMemory = () => {
+    if (!filtered.length) return;
+    const rand = filtered[Math.floor(Math.random() * filtered.length)];
+    setSelected(rand);
+    setRandomToast(true);
+    setTimeout(() => setRandomToast(false), 2200);
+  };
+
+  // ── Slideshow logic ───────────────────────────────────────────────────────
+  const advanceSlide = useCallback((dir) => {
+    setSlideshowIdx(i => {
+      let next = i + dir;
+      if (next < 0) next = slideshowOrder.length - 1;
+      if (next >= slideshowOrder.length) next = 0;
+      return next;
+    });
+    setSlideshowProg(0);
+  }, [slideshowOrder.length]);
+
+  const startSlideshow = () => {
+    if (filtered.length === 0) return;
+    // Create a shuffled array of indices
+    let order = Array.from({ length: filtered.length }, (_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    setSlideshowOrder(order);
+    setSlideshowIdx(0);
+    setSlideshowOpen(true);
+    setSlideshowPlaying(true);
+    setSlideshowProg(0);
+  };
+
+  // Auto-advance timer
+  useEffect(() => {
+    if (!slideshowOpen) return;
+    if (!slideshowPlaying) {
+      clearInterval(slideshowTimer.current);
+      clearInterval(progressTimer.current);
+      return;
+    }
+    // Progress bar tick (every 40ms → 100 steps over 4 s)
+    setSlideshowProg(0);
+    const STEP  = 40;
+    const STEPS = SLIDESHOW_INTERVAL / STEP;
+    let count = 0;
+    progressTimer.current = setInterval(() => {
+      count++;
+      setSlideshowProg(Math.min(100, (count / STEPS) * 100));
+    }, STEP);
+
+    slideshowTimer.current = setTimeout(() => {
+      advanceSlide(1);
+    }, SLIDESHOW_INTERVAL);
+
+    return () => {
+      clearTimeout(slideshowTimer.current);
+      clearInterval(progressTimer.current);
+    };
+  }, [slideshowOpen, slideshowPlaying, slideshowIdx, advanceSlide]);
+
+  const closeSlideshow = () => {
+    setSlideshowOpen(false);
+    clearTimeout(slideshowTimer.current);
+    clearInterval(progressTimer.current);
+  };
 
   if (isLoading) {
     return (
@@ -86,8 +191,19 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
     );
   }
 
+  const slideshowItem = (slideshowOrder.length > 0 && slideshowOrder[slideshowIdx] !== undefined)
+    ? filtered[slideshowOrder[slideshowIdx]]
+    : null;
+
   return (
     <div className="gallery-container">
+
+      {/* ── Random memory toast ── */}
+      {randomToast && (
+        <div className="random-toast" aria-live="polite">
+          🎲 Surprise memory!
+        </div>
+      )}
 
       {/* ── Header row ── */}
       <div className="gallery-header">
@@ -273,23 +389,20 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
               </div>
             )}
 
-            {/* Per-page custom selector moved to bottom */}
+            {/* Per-page custom selector */}
             <div className="per-page-wrapper" role="group" aria-label="Items per page">
               <span className="per-page-label">Show</span>
-              <div 
+              <div
                 className={`custom-select-wrap reverse ${isPerPageOpen ? "open" : ""}`}
                 ref={perPageRef}
                 style={{ width: "fit-content", minWidth: "54px" }}
               >
-                <div 
-                  className="custom-select-trigger" 
+                <div
+                  className="custom-select-trigger"
                   onClick={() => setIsPerPageOpen(!isPerPageOpen)}
-                  style={{ padding: "6px 8px", fontSize: "12.5px", minHeight: "30px", justifyContent: "center", gap: "6px" }}
+                  style={{ padding: "6px 12px", fontSize: "12.5px", minHeight: "30px", justifyContent: "center" }}
                 >
                   <span className="select-value">{perPage}</span>
-                  <svg className="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: "12px", height: "12px", margin: 0 }}>
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
                 </div>
                 {isPerPageOpen && (
                   <ul className="custom-select-list" style={{ padding: "4px 0", minWidth: "100%", textAlign: "center" }}>
@@ -314,10 +427,63 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
         </>
       )}
 
+      {/* ── Floating Speed-Dial FAB (bottom-right) ── */}
+      {filtered.length > 0 && (
+        <div className={`gallery-fab-group${fabOpen ? " fab-open" : ""}`} aria-label="Quick actions">
+
+          {/* Sub-button: Surprise Me */}
+          <div className={`fab-sub-wrap${fabOpen ? " fab-sub-visible" : ""}`} style={{ "--fab-delay": "0.05s" }}>
+            <button
+              className="fab-btn fab-surprise"
+              onClick={() => { openRandomMemory(); setFabOpen(false); }}
+              aria-label="Surprise Me"
+            >
+              <span style={{ fontSize: "22px", lineHeight: 1 }}>🎲</span>
+            </button>
+            <span className="fab-sub-label">Surprise Me</span>
+          </div>
+
+          {/* Sub-button: Play Memories */}
+          <div className={`fab-sub-wrap${fabOpen ? " fab-sub-visible" : ""}`} style={{ "--fab-delay": "0s" }}>
+            <button
+              className="fab-btn fab-play"
+              onClick={() => { startSlideshow(); setFabOpen(false); }}
+              aria-label="Play Memories"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            </button>
+            <span className="fab-sub-label">Play</span>
+          </div>
+
+          {/* Main trigger button */}
+          <button
+            className="fab-btn fab-main"
+            onClick={() => setFabOpen(o => !o)}
+            aria-label={fabOpen ? "Close actions" : "Open actions"}
+            aria-expanded={fabOpen}
+          >
+            <span className={`fab-main-icon${fabOpen ? " fab-icon-open" : ""}`}>
+              {fabOpen ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z" />
+                  <path d="M8 12h8M12 8v8" />
+                </svg>
+              )}
+            </span>
+          </button>
+        </div>
+      )}
+
       {/* ── Lightbox ── */}
       {selected && (() => {
         const isVid = isVideoItem(selected);
-        return (
+        const modal = (
           <div
             className="lightbox-overlay"
             onClick={() => setSelected(null)}
@@ -354,6 +520,116 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
             </div>
           </div>
         );
+        return typeof document !== "undefined" ? createPortal(modal, document.body) : null;
+      })()}
+
+      {/* ── Slideshow / Story Mode ── */}
+      {slideshowOpen && slideshowItem && (() => {
+        const isVid = isVideoItem(slideshowItem);
+        const modal = (
+          <div 
+            className="slideshow-overlay" 
+            role="dialog" 
+            aria-modal="true" 
+            aria-label="Slideshow"
+            onClick={closeSlideshow}
+          >
+
+            {/* Progress bar */}
+            <div className="slideshow-progress-track">
+              <div
+                className="slideshow-progress-bar"
+                style={{ width: `${slideshowPlaying ? slideshowProg : (slideshowProg || 0)}%` }}
+              />
+            </div>
+
+            {/* Counter + Close */}
+            <div className="slideshow-topbar">
+              <span className="slideshow-counter">
+                {slideshowIdx + 1} / {filtered.length}
+              </span>
+              <button className="slideshow-close-btn" onClick={closeSlideshow} aria-label="Close slideshow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Main media */}
+            <div className="slideshow-media-wrap" key={slideshowIdx}>
+              {isVid ? (
+                <video
+                  src={slideshowItem.photo_url}
+                  className="slideshow-media"
+                  muted playsInline autoPlay
+                  onClick={(e) => e.stopPropagation()}
+                />
+              ) : (
+                <img
+                  src={slideshowItem.photo_url}
+                  alt={slideshowItem.caption || "Trip memory"}
+                  className="slideshow-media"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              )}
+            </div>
+
+            {/* Info overlay */}
+            <div className="slideshow-info">
+              <span className="slideshow-uploader">
+                {isVid ? "🎬" : "📷"} By {slideshowItem.uploader}
+              </span>
+              {slideshowItem.caption && (
+                <p className="slideshow-caption">&ldquo;{slideshowItem.caption}&rdquo;</p>
+              )}
+            </div>
+
+            {/* Controls */}
+            <div className="slideshow-controls" onClick={(e) => e.stopPropagation()}>
+              <button
+                className="slideshow-ctrl-btn"
+                onClick={() => advanceSlide(-1)}
+                aria-label="Previous"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+
+              <button
+                className="slideshow-ctrl-btn slideshow-play-btn"
+                onClick={() => setSlideshowPlaying(p => !p)}
+                aria-label={slideshowPlaying ? "Pause" : "Play"}
+              >
+                {slideshowPlaying ? (
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" rx="1" />
+                    <rect x="14" y="4" width="4" height="16" rx="1" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                )}
+              </button>
+
+              <button
+                className="slideshow-ctrl-btn"
+                onClick={() => advanceSlide(1)}
+                aria-label="Next"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Tap-zone: left / right sides for prev/next */}
+            <div className="slideshow-tap-left"  onClick={(e) => { e.stopPropagation(); advanceSlide(-1); }} aria-label="Previous" role="button" />
+            <div className="slideshow-tap-right" onClick={(e) => { e.stopPropagation(); advanceSlide(1); }}  aria-label="Next"     role="button" />
+          </div>
+        );
+        return typeof document !== "undefined" ? createPortal(modal, document.body) : null;
       })()}
     </div>
   );

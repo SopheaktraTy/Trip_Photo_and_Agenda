@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import Confetti from "@/components/Confetti";
 import { payments } from "@/data/payments";
 
 const isVideo = (file) => file.type.startsWith("video/");
@@ -15,6 +16,7 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [currentFileIdx, setCurrentFileIdx] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
 
   // Custom dropdown
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -93,6 +95,7 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
       setFiles([]);
       setCaption("");
       setUploader("");
+      setShowConfetti(true);
       if (onUploadSuccess) onUploadSuccess();
     } catch (err) {
       console.error(err);
@@ -105,6 +108,8 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
   };
 
   return (
+    <>
+    <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
     <div className="upload-section">
       <h3>Add a Memory</h3>
       <p style={{ color: "rgba(242,234,216,0.5)", fontSize: "13px", marginBottom: "20px" }}>
@@ -152,11 +157,6 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
                     className={`custom-select-option ${uploader === p.name ? "selected" : ""}`}
                     onClick={() => { setUploader(p.name); setDropdownOpen(false); setErrorMessage(""); }}
                   >
-                    {uploader === p.name && (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="option-check">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    )}
                     {p.name}
                   </li>
                 ))}
@@ -274,5 +274,6 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
         </button>
       </form>
     </div>
+    </>
   );
 }
