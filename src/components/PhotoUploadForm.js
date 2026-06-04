@@ -8,6 +8,41 @@ import { payments } from "@/data/payments";
 const isVideo = (file) => file.type.startsWith("video/");
 const isImage = (file) => file.type.startsWith("image/");
 
+const uploadFileWithProgress = (url, file, onProgress) => {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("PUT", url);
+    
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = Math.round((event.loaded / event.total) * 100);
+        onProgress(percentComplete);
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const response = JSON.parse(xhr.responseText);
+          resolve(response);
+        } catch (e) {
+          resolve({ id: null });
+        }
+      } else {
+        let errMsg = xhr.statusText;
+        try {
+          const errRes = JSON.parse(xhr.responseText);
+          if (errRes.error) errMsg = errRes.error.message || errMsg;
+        } catch (_) {}
+        reject(new Error(`Upload failed with status ${xhr.status}: ${errMsg}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error("Network error during upload"));
+    xhr.send(file);
+  });
+};
+
 export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
   const [files, setFiles] = useState([]);           
   const [uploader, setUploader] = useState("");
@@ -66,29 +101,79 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
     setErrorMessage("");
 
     try {
+      // 1. Fetch access token from the backend
+      const tokenRes = await fetch("/api/upload");
+      if (!tokenRes.ok) {
+        const errorData = await tokenRes.json();
+        throw new Error(`Failed to get upload credentials: ${errorData.error}`);
+      }
+      const { accessToken } = await tokenRes.json();
+
+      const folderId = process.env.NEXT_PUBLIC_GDRIVE_FOLDER_ID;
+      if (!folderId) {
+        throw new Error("Google Drive Folder ID is not configured (NEXT_PUBLIC_GDRIVE_FOLDER_ID)");
+      }
+
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         setCurrentFileIdx(i + 1);
-        setUploadProgress(Math.round(((i) / files.length) * 100));
 
-        // 1. Upload file to Google Drive via our backend API
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const uploadRes = await fetch("/api/upload", {
+        // 2. Initiate Resumable Upload Session
+        const initiateRes = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable", {
           method: "POST",
-          body: formData,
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type": "application/json; charset=UTF-8",
+          },
+          body: JSON.stringify({
+            name: file.name,
+            parents: [folderId]
+          }),
         });
 
-        if (!uploadRes.ok) {
-          const errorData = await uploadRes.json();
-          throw new Error(`Google Drive upload failed for ${file.name}: ${errorData.error}`);
+        if (!initiateRes.ok) {
+          const errorText = await initiateRes.text();
+          throw new Error(`Failed to initiate Google Drive upload for ${file.name}: ${errorText}`);
         }
 
-        const uploadData = await uploadRes.json();
-        const photoUrl = uploadData.url;
+        const uploadUrl = initiateRes.headers.get("Location");
+        if (!uploadUrl) {
+          throw new Error(`Failed to get upload location for ${file.name}`);
+        }
 
-        // 2. Save metadata and Google Drive URL to Supabase
+        // 3. Upload file content with progress tracking
+        const fileWeight = 100 / files.length;
+        const uploadData = await uploadFileWithProgress(uploadUrl, file, (percent) => {
+          const overallProgress = Math.round((i * fileWeight) + (percent * fileWeight / 100));
+          setUploadProgress(overallProgress);
+        });
+
+        const fileId = uploadData.id;
+        if (!fileId) {
+          throw new Error(`Failed to retrieve file ID from Google Drive for ${file.name}`);
+        }
+
+        // 4. Create permissions (make reader for anyone)
+        const permissionRes = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            role: "reader",
+            type: "anyone",
+          }),
+        });
+
+        if (!permissionRes.ok) {
+          const errorText = await permissionRes.text();
+          console.warn(`Failed to set public permissions for ${file.name}:`, errorText);
+        }
+
+        const photoUrl = `/api/image?id=${fileId}`;
+
+        // 5. Save metadata and Google Drive URL to Supabase
         const { error: dbError } = await supabase.from("trip_photos").insert([{
           photo_url: photoUrl,
           caption: caption,
