@@ -8,38 +8,48 @@ import { payments } from "@/data/payments";
 const isVideo = (file) => file.type.startsWith("video/");
 const isImage = (file) => file.type.startsWith("image/");
 
-const uploadFileWithProgress = (url, file, onProgress) => {
+/**
+ * Uploads a file to our own /api/upload Edge endpoint using XHR so we can
+ * track progress. The Edge Function proxies the data to Google Drive server-side,
+ * which avoids both the Vercel 4.5 MB limit and any browser CORS issues.
+ */
+const uploadFileWithProgress = (file, onProgress) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("PUT", url);
-    
+    const url =
+      `/api/upload` +
+      `?filename=${encodeURIComponent(file.name)}` +
+      `&mimeType=${encodeURIComponent(file.type || 'application/octet-stream')}`;
+
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+
+    // Track bytes sent from browser → Vercel Edge
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) {
-        const percentComplete = Math.round((event.loaded / event.total) * 100);
-        onProgress(percentComplete);
+        onProgress(Math.round((event.loaded / event.total) * 100));
       }
     };
 
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) {
         try {
-          const response = JSON.parse(xhr.responseText);
-          resolve(response);
-        } catch (e) {
-          resolve({ id: null });
+          resolve(JSON.parse(xhr.responseText));
+        } catch (_) {
+          reject(new Error('Invalid JSON response from server'));
         }
       } else {
-        let errMsg = xhr.statusText;
+        let errMsg = `Upload failed (${xhr.status})`;
         try {
-          const errRes = JSON.parse(xhr.responseText);
-          if (errRes.error) errMsg = errRes.error.message || errMsg;
+          const errData = JSON.parse(xhr.responseText);
+          if (errData.error) errMsg = errData.error;
         } catch (_) {}
-        reject(new Error(`Upload failed with status ${xhr.status}: ${errMsg}`));
+        reject(new Error(errMsg));
       }
     };
 
-    xhr.onerror = () => reject(new Error("Network error during upload"));
-    xhr.send(file);
+    xhr.onerror = () => reject(new Error('Network error during upload'));
+    xhr.send(file); // Send raw binary — no FormData wrapper needed
   });
 };
 
@@ -95,7 +105,7 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!files.length) { setErrorMessage("Please select at least one photo or video."); return; }
-    if (!uploader) { setErrorMessage("Please select who is uploading."); return; }
+    if (!uploader)     { setErrorMessage("Please select who is uploading."); return; }
 
     setIsUploading(true);
     setErrorMessage("");
@@ -105,58 +115,22 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
         const file = files[i];
         setCurrentFileIdx(i + 1);
 
-        // 1. Ask backend to create a Google Drive resumable upload session.
-        //    Backend handles OAuth + session initiation — no large payload goes through Vercel.
-        const sessionRes = await fetch(
-          `/api/upload?filename=${encodeURIComponent(file.name)}&mimeType=${encodeURIComponent(file.type || "application/octet-stream")}`
-        );
-
-        if (!sessionRes.ok) {
-          const errData = await sessionRes.json().catch(() => ({}));
-          throw new Error(`Could not create upload session for "${file.name}": ${errData.error || sessionRes.statusText}`);
-        }
-
-        const { uploadUrl, accessToken } = await sessionRes.json();
-
-        if (!uploadUrl) {
-          throw new Error(`No upload URL returned for "${file.name}"`);
-        }
-
-        // 2. Upload file DIRECTLY to Google Drive (browser → Google, bypasses Vercel).
-        //    Progress tracked with XHR.
+        // Upload via our Edge API — no CORS, no 4.5 MB limit.
+        // Progress reflects browser → Vercel Edge transfer speed.
         const fileWeight = 100 / files.length;
-        const driveData = await uploadFileWithProgress(uploadUrl, file, (percent) => {
-          const overall = Math.round(i * fileWeight + (percent * fileWeight) / 100);
-          setUploadProgress(overall);
+        const data = await uploadFileWithProgress(file, (percent) => {
+          setUploadProgress(Math.round(i * fileWeight + (percent * fileWeight) / 100));
         });
 
-        const fileId = driveData?.id;
-        if (!fileId) {
-          throw new Error(`Google Drive did not return a file ID for "${file.name}"`);
+        if (!data.url) {
+          throw new Error(`Upload did not return a URL for "${file.name}"`);
         }
 
-        // 3. Set the file public (anyone with link can view).
-        const permRes = await fetch(
-          `https://www.googleapis.com/drive/v3/files/${fileId}/permissions`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ role: "reader", type: "anyone" }),
-          }
-        );
-        if (!permRes.ok) {
-          console.warn("Could not set public permission:", await permRes.text());
-        }
-
-        // 4. Save metadata to Supabase.
-        const photoUrl = `/api/image?id=${fileId}`;
+        // Save metadata to Supabase
         const { error: dbError } = await supabase.from("trip_photos").insert([{
-          photo_url: photoUrl,
-          caption: caption,
-          uploader: uploader,
+          photo_url: data.url,
+          caption:   caption,
+          uploader:  uploader,
           file_type: isVideo(file) ? "video" : "image",
         }]);
 

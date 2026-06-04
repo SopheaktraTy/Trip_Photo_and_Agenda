@@ -1,77 +1,130 @@
 import { NextResponse } from 'next/server';
-import { google } from 'googleapis';
 
 /**
- * GET /api/upload?filename=xxx&mimeType=yyy
+ * Edge Runtime — no 4.5 MB body-size limit, no CORS issues.
  *
- * 1. Exchanges refresh token → access token (server-side, secrets never leave server)
- * 2. Initiates a Google Drive resumable upload session server-side
- * 3. Returns { uploadUrl, accessToken } to the browser
- *
- * The browser then PUT the file directly to `uploadUrl` — bypassing Vercel's
- * 4.5 MB serverless body limit entirely.
+ * POST /api/upload?filename=xxx&mimeType=yyy
+ *   Accepts raw binary file as the request body.
+ *   Creates a Google Drive resumable-upload session server-side,
+ *   pipes the file to Google Drive, sets it public, then returns
+ *   { url, fileId }.
  */
-export async function GET(request) {
+export const runtime = 'edge';
+
+async function getAccessToken() {
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id:     process.env.GOOGLE_CLIENT_ID     || '',
+      client_secret: process.env.GOOGLE_CLIENT_SECRET || '',
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN || '',
+      grant_type:    'refresh_token',
+    }),
+  });
+
+  const data = await res.json();
+  if (!data.access_token) {
+    throw new Error('Failed to get Google access token: ' + JSON.stringify(data));
+  }
+  return data.access_token;
+}
+
+export async function POST(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const filename = searchParams.get('filename');
+    const filename = searchParams.get('filename') || 'upload';
     const mimeType = searchParams.get('mimeType') || 'application/octet-stream';
+    const folderId = process.env.NEXT_PUBLIC_GDRIVE_FOLDER_ID;
 
-    const clientId     = process.env.GOOGLE_CLIENT_ID;
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-    const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
-    const folderId     = process.env.NEXT_PUBLIC_GDRIVE_FOLDER_ID;
-
-    if (!clientId || !clientSecret || !refreshToken || !folderId) {
+    // Validate env
+    if (
+      !process.env.GOOGLE_CLIENT_ID ||
+      !process.env.GOOGLE_CLIENT_SECRET ||
+      !process.env.GOOGLE_REFRESH_TOKEN ||
+      !folderId
+    ) {
       return NextResponse.json(
-        { error: 'Google Drive OAuth credentials are not fully configured' },
+        { error: 'Google Drive credentials are not configured on the server.' },
         { status: 500 }
       );
     }
 
-    // --- 1. Get access token ---
-    const oauth2Client = new google.auth.OAuth2(
-      clientId,
-      clientSecret,
-      'https://developers.google.com/oauthplayground'
-    );
-    oauth2Client.setCredentials({ refresh_token: refreshToken });
+    // 1. Exchange refresh token for access token (server-side, secrets safe)
+    const accessToken = await getAccessToken();
 
-    const { token: accessToken } = await oauth2Client.getAccessToken();
-    if (!accessToken) throw new Error('Failed to retrieve access token from Google.');
+    // 2. Read the raw file body
+    const fileBuffer = await request.arrayBuffer();
+    const fileSize = fileBuffer.byteLength;
 
-    // --- 2. Initiate resumable upload session (server-side, no CORS issue) ---
-    const initiateRes = await fetch(
-      'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable',
+    // 3. Initiate a Google Drive resumable upload session (server-side → no CORS)
+    const sessionRes = await fetch(
+      'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&fields=id',
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json; charset=UTF-8',
-          'X-Upload-Content-Type': mimeType,
+          Authorization:            `Bearer ${accessToken}`,
+          'Content-Type':           'application/json; charset=UTF-8',
+          'X-Upload-Content-Type':  mimeType,
+          'X-Upload-Content-Length': String(fileSize),
         },
-        body: JSON.stringify({
-          name: filename || 'upload',
-          parents: [folderId],
-        }),
+        body: JSON.stringify({ name: filename, parents: [folderId] }),
       }
     );
 
-    if (!initiateRes.ok) {
-      const errorText = await initiateRes.text();
-      throw new Error(`Google Drive session initiation failed: ${errorText}`);
+    if (!sessionRes.ok) {
+      const errText = await sessionRes.text();
+      throw new Error(`Google Drive session creation failed: ${errText}`);
     }
 
-    const uploadUrl = initiateRes.headers.get('Location');
-    if (!uploadUrl) throw new Error('No upload URL returned from Google Drive.');
+    const uploadUrl = sessionRes.headers.get('Location');
+    if (!uploadUrl) throw new Error('Google Drive did not return an upload URL.');
 
-    // Return uploadUrl + accessToken so the client can upload the file directly
-    // and then set permissions afterwards.
-    return NextResponse.json({ uploadUrl, accessToken });
+    // 4. Upload the file to Google Drive (server-side → no CORS)
+    const uploadRes = await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type':   mimeType,
+        'Content-Length': String(fileSize),
+      },
+      body: fileBuffer,
+    });
+
+    if (!uploadRes.ok) {
+      const errText = await uploadRes.text();
+      throw new Error(`Google Drive upload failed (${uploadRes.status}): ${errText}`);
+    }
+
+    const driveData = await uploadRes.json();
+    const fileId = driveData.id;
+    if (!fileId) throw new Error('Google Drive did not return a file ID.');
+
+    // 5. Make the file publicly readable
+    const permRes = await fetch(
+      `https://www.googleapis.com/drive/v3/files/${fileId}/permissions`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization:  `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ role: 'reader', type: 'anyone' }),
+      }
+    );
+    if (!permRes.ok) {
+      console.warn('Could not set public permission:', await permRes.text());
+    }
+
+    // 6. Return the proxy URL (our /api/image route bypasses Google's viewer block)
+    return NextResponse.json({
+      success: true,
+      url: `/api/image?id=${fileId}`,
+      fileId,
+    });
   } catch (error) {
-    console.error('Upload session error:', error);
+    console.error('Upload error:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to create upload session' },
+      { error: error.message || 'Upload failed' },
       { status: 500 }
     );
   }
