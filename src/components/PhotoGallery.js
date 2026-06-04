@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
+import { supabase } from "@/lib/supabase";
 
 const isVideoUrl = (url) => {
   if (!url) return false;
@@ -40,6 +41,10 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
   const [isPerPageOpen, setIsPerPageOpen] = useState(false);
   const [fabOpen,       setFabOpen]       = useState(false);
   const perPageRef = useRef(null);
+
+  // ── Delete state ─────────────────────────────────────────────────────────
+  const [photoToDelete, setPhotoToDelete] = useState(null);
+  const [isDeleting, setIsDeleting]       = useState(false);
 
   // ── Slideshow state ──────────────────────────────────────────────────────
   const [slideshowOpen,    setSlideshowOpen]    = useState(false);
@@ -178,6 +183,27 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
     setSlideshowOpen(false);
     clearTimeout(slideshowTimer.current);
     clearInterval(progressTimer.current);
+  };
+
+  const confirmDelete = async () => {
+    if (!photoToDelete) return;
+    setIsDeleting(true);
+    try {
+      const { error } = await supabase
+        .from("trip_photos")
+        .delete()
+        .eq("id", photoToDelete.id);
+      
+      if (error) throw error;
+      
+      setPhotoToDelete(null);
+      if (onRefresh) onRefresh();
+    } catch (err) {
+      console.error("Failed to delete photo:", err);
+      alert("Failed to delete photo. Please try again.");
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   if (isLoading) {
@@ -328,11 +354,23 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
                     />
                   )}
                   <div className="photo-overlay">
+                    <button 
+                      className="delete-photo-btn"
+                      onClick={(e) => { e.stopPropagation(); setPhotoToDelete(item); }}
+                      aria-label="Delete memory"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                        <path d="M10 11v6" />
+                        <path d="M14 11v6" />
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                      </svg>
+                    </button>
                     <div className="photo-meta">
-                      <span className="photo-uploader">By {item.uploader}</span>
                       <span className="photo-date">{formatDate(item.created_at)}</span>
+                      <span className="photo-uploader">By {item.uploader}</span>
                     </div>
-                    {item.caption && <p className="photo-caption">{item.caption}</p>}
                   </div>
                 </div>
               );
@@ -627,6 +665,66 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
             {/* Tap-zone: left / right sides for prev/next */}
             <div className="slideshow-tap-left"  onClick={(e) => { e.stopPropagation(); advanceSlide(-1); }} aria-label="Previous" role="button" />
             <div className="slideshow-tap-right" onClick={(e) => { e.stopPropagation(); advanceSlide(1); }}  aria-label="Next"     role="button" />
+          </div>
+        );
+        return typeof document !== "undefined" ? createPortal(modal, document.body) : null;
+      })()}
+
+      {/* ── Delete Confirmation Modal ── */}
+      {photoToDelete && (() => {
+        const isVid = isVideoItem(photoToDelete);
+        const modal = (
+          <div className="delete-modal-overlay" onClick={() => !isDeleting && setPhotoToDelete(null)}>
+            <div className="delete-modal-content" onClick={e => e.stopPropagation()}>
+
+              {/* Icon header */}
+              <div className="delete-modal-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  <path d="M10 11v6" />
+                  <path d="M14 11v6" />
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                </svg>
+              </div>
+
+              <h4 className="delete-modal-title">Delete Memory?</h4>
+              <p className="delete-modal-desc">This will permanently remove this memory and cannot be undone.</p>
+
+              <div className="delete-preview-box">
+                {isVid ? (
+                  <video src={videoSrc(photoToDelete.photo_url)} muted playsInline className="delete-preview-media" />
+                ) : (
+                  <img src={photoToDelete.photo_url} alt="Preview" className="delete-preview-media" />
+                )}
+                <div className="delete-preview-overlay">
+                  <span style={{fontSize: '11px', fontWeight: 'bold', color: '#fff'}}>{isVid ? "🎬" : "📷"} By {photoToDelete.uploader}</span>
+                </div>
+              </div>
+
+              <div className="delete-modal-actions">
+                <button className="delete-cancel-btn" onClick={() => setPhotoToDelete(null)} disabled={isDeleting}>Cancel</button>
+                <button className="delete-confirm-btn" onClick={confirmDelete} disabled={isDeleting}>
+                  {isDeleting ? (
+                    <>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{width:'13px',height:'13px',animation:'spin 0.8s linear infinite'}}>
+                        <circle cx="12" cy="12" r="10" strokeOpacity="0.25"/>
+                        <path d="M12 2a10 10 0 0 1 10 10" />
+                      </svg>
+                      Deleting…
+                    </>
+                  ) : (
+                    <>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{width:'13px',height:'13px'}}>
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                      </svg>
+                      Delete
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         );
         return typeof document !== "undefined" ? createPortal(modal, document.body) : null;

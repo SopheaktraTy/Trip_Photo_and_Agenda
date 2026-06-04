@@ -2619,6 +2619,32 @@ body {
 }
 .pb-upload-col, .pb-gallery-col { position: relative; }
 
+/* ── Mobile layout: single column with toggle ── */
+@media (max-width: 860px) {
+  /* Show the Gallery / Share Media toggle bar */
+  .pb-view-toggle {
+    display: flex;
+  }
+
+  /* Stack into a single column */
+  .pb-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hide both panels by default on mobile */
+  .pb-upload-col,
+  .pb-gallery-col {
+    display: none;
+  }
+
+  /* Show only the active panel */
+  .pb-upload-col.mobile-visible,
+  .pb-gallery-col.mobile-visible {
+    display: block;
+  }
+}
+
+
 /* ── Upload section card ── */
 .upload-section {
   background: rgba(255,255,255,0.03);
@@ -3417,6 +3443,21 @@ body {
   .slideshow-controls { bottom: 20px; gap: 12px; }
   .gallery-header-actions { gap: 6px; }
   .gallery-action-btn { padding: 6px 10px; font-size: 11.5px; }
+
+  /* Reduce container padding on mobile */
+  .gallery-container { padding: 18px 14px; }
+
+  /* Let the tabs row scroll horizontally instead of clipping */
+  .gallery-toolbar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .gallery-tabs { flex-shrink: 0; }
+
+  /* Slightly smaller tab buttons */
+  .gallery-tab-btn { padding: 6px 10px; font-size: 12px; }
+}
+
+@media (max-width: 420px) {
+  .gallery-container { padding: 14px 10px; }
+  .gallery-tab-btn { padding: 5px 8px; font-size: 11.5px; gap: 4px; }
 }
 
 /* ── Gallery Toolbar (tabs + per-page in one row) ── */
@@ -3675,17 +3716,17 @@ body {
 }
 .photo-card:hover .photo-overlay { opacity: 1; }
 .photo-meta {
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
   margin-bottom: 4px;
 }
 .photo-uploader {
   font-family: 'Outfit', sans-serif;
-  font-size: 11.5px; font-weight: 700;
+  font-size: 9.5px; font-weight: 700;
   color: var(--pb-lime);
 }
 .photo-date {
   font-family: 'Karla', sans-serif;
-  font-size: 10px;
+  font-size: 8.5px;
   color: rgba(242,234,216,0.38);
 }
 .photo-caption {
@@ -3761,7 +3802,7 @@ body {
   max-width: 860px; width: 100%;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.09);
-  border-radius: var(--pb-radius-xl);
+  border-radius: var(--pb-radius-md);
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(0,0,0,0.65);
   animation: zoomIn 0.28s cubic-bezier(0.34,1.56,0.64,1);
@@ -3787,7 +3828,7 @@ body {
   flex-shrink: 0;
 }
 .lightbox-info {
-  padding: 20px 24px;
+  padding: 14px 18px;
   background: rgba(12,20,15,0.98);
   border-top: 1px solid rgba(255,255,255,0.07);
   text-align: left;
@@ -3798,13 +3839,14 @@ body {
   margin-bottom: 8px;
 }
 .uploader-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   background: rgba(143,190,107,0.11);
   border: 1px solid rgba(143,190,107,0.28);
-  padding: 4px 13px;
+  padding: 3px 9px;
   border-radius: 100px;
   font-family: 'Outfit', sans-serif;
-  font-size: 12px; font-weight: 700;
+  font-size: 11px; font-weight: 700;
   color: var(--pb-lime);
 }
 .badge-vid-type {
@@ -3814,15 +3856,16 @@ body {
 }
 .date-badge {
   font-family: 'Karla', sans-serif;
-  font-size: 11.5px;
+  font-size: 11px;
   color: rgba(242,234,216,0.42);
 }
 .lightbox-caption {
   font-family: 'Lora', serif;
-  font-size: 14.5px;
+  font-size: 13px;
   color: var(--pb-sand);
-  line-height: 1.6;
-  margin: 0;
+  line-height: 1.55;
+  margin: 6px 0 0 0;
+  padding: 0 1px;
   font-style: italic;
 }
 
@@ -3839,46 +3882,10 @@ body {
   color: rgba(242,234,216,0.25);
 }
 
-/* TABLET (<=1024px) */
-@media (max-width: 1024px) {
-  .pb-content-grid { grid-template-columns: 1fr; }
-  .pb-view-toggle { display: flex; }
-  .pb-upload-col, .pb-gallery-col { display: none; }
-  .pb-upload-col.mobile-visible, .pb-gallery-col.mobile-visible { display: block; }
-  .upload-section { position: static; }
-  .photo-grid { columns: 3 160px; }
-}
-
-/* PHONE (<=640px) */
-@media (max-width: 640px) {
-  .pb-nav { padding: 0 14px; height: 52px; }
-  .pb-nav-sub { display: none; }
-  .pb-nav-link { padding: 6px 11px; font-size: 12px; }
-  .pb-hero { padding: 40px 14px 36px; }
-  .pb-hero-title { font-size: clamp(34px, 11vw, 52px); }
-  .pb-hero-desc { font-size: 14px; margin-bottom: 28px; }
-  .pb-hero-stats { padding: 10px 18px; }
-  .pb-stat { padding: 0 12px; }
+/* SMALL SCREENS (<=600px) */
+@media (max-width: 600px) {
   .pb-stat-num { font-size: 20px; }
-  .pb-stat-divider { height: 26px; }
-  .pb-main { padding: 0 12px 56px; }
-  .pb-view-toggle { margin-bottom: 16px; }
-  .pb-toggle-btn { font-size: 13px; padding: 9px 14px; }
-  .upload-section { padding: 22px 16px; border-radius: var(--pb-radius-lg); }
-  .upload-section h3 { font-size: 18px; }
-  .file-dropzone { padding: 22px 14px; }
-  .dropzone-content { font-size: 12.5px; }
-  .dropzone-hint { font-size: 10.5px; }
-  .gallery-container { padding: 20px 14px; border-radius: var(--pb-radius-lg); }
-  .gallery-container h3 { font-size: 17px; }
-  .photo-grid { columns: 2 130px; gap: 9px; }
-  .photo-card { margin-bottom: 9px; border-radius: 12px; }
-  .lightbox-overlay { padding: 12px; }
-  .lightbox-content { border-radius: var(--pb-radius-lg); max-height: 92vh; }
-  .lightbox-close { top: 14px; right: 14px; width: 40px; height: 40px; }
-  .lightbox-info { padding: 14px 16px; }
-  .lightbox-caption { font-size: 13.5px; }
-  .lightbox-meta-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .lightbox-meta-row { flex-direction: row; justify-content: space-between; align-items: center; gap: 8px; }
   .pb-setup-banner { padding: 0 12px; }
   .pb-setup-banner-inner { flex-direction: column; padding: 14px 16px; }
   .pb-setup-link { align-self: flex-start; }
@@ -3893,3 +3900,196 @@ body {
   .pb-toggle-btn { font-size: 12px; padding: 8px 10px; gap: 5px; }
 }
 
+/* ── Delete Feature Styles ── */
+
+/* Pill delete button inside lightbox info bar */
+.lightbox-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px 5px 9px;
+  border-radius: 100px;
+  background: rgba(180, 30, 30, 0.14);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #ff7070;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  letter-spacing: 0.01em;
+}
+.lightbox-delete-btn:hover {
+  background: rgba(220, 38, 38, 0.25);
+  border-color: rgba(220, 38, 38, 0.6);
+  color: #ffaaaa;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+.lightbox-delete-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* Bin icon on card hover */
+.delete-photo-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(6, 10, 8, 0.72);
+  border: 1px solid rgba(255, 100, 100, 0.25);
+  color: #ff6060;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 10;
+  opacity: 0;
+  transform: scale(0.85);
+}
+.photo-card:hover .delete-photo-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+.delete-photo-btn:hover {
+  background: rgba(200, 30, 30, 0.3);
+  border-color: rgba(255, 80, 80, 0.55);
+  color: #ffaaaa;
+  transform: scale(1.12);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.18);
+}
+.delete-photo-btn svg { width: 13px; height: 13px; }
+
+.delete-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(2, 5, 3, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 15000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.18s ease;
+}
+.delete-modal-content {
+  background: linear-gradient(160deg, #15201a 0%, #0e1710 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.04) inset;
+  animation: zoomIn 0.28s cubic-bezier(0.34,1.56,0.64,1);
+}
+.delete-modal-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.delete-modal-icon svg { width: 24px; height: 24px; color: #ff6060; }
+.delete-modal-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.01em;
+}
+.delete-preview-box {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.delete-preview-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.delete-preview-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 10px;
+  text-align: left;
+}
+.delete-modal-desc {
+  font-family: 'Karla', sans-serif;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.45);
+  margin: 0 0 18px 0;
+  line-height: 1.5;
+}
+.delete-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.delete-cancel-btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.delete-cancel-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.22);
+  color: #fff;
+}
+.delete-confirm-btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  border: 1px solid rgba(220,38,38,0.6);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(220,38,38,0.3);
+}
+.delete-confirm-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 6px 20px rgba(220,38,38,0.45);
+  transform: translateY(-1px);
+}
+.delete-confirm-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+.delete-confirm-btn:disabled, .delete-cancel-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
