@@ -57,6 +57,11 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
 
   // ── Random memory toast ──────────────────────────────────────────────────
   const [randomToast, setRandomToast] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // ── Close per-page dropdown on outside click ─────────────────────────────
   useEffect(() => {
@@ -206,7 +211,7 @@ export default function PhotoGallery({ photos, isLoading, onRefresh }) {
     }
   };
 
-  if (isLoading) {
+  if (!mounted || isLoading) {
     return (
       <div className="gallery-container">
         <div className="gallery-loading">

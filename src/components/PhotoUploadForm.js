@@ -33,7 +33,16 @@ export default function PhotoUploadForm({ onUploadSuccess, disabled = false }) {
   }, []);
 
   const addFiles = (incoming) => {
-    const valid = Array.from(incoming).filter(
+    const MAX_SIZE = 500 * 1024 * 1024; // 500MB
+    const arrayIncoming = Array.from(incoming);
+    const oversized = arrayIncoming.some((f) => f.size > MAX_SIZE);
+
+    if (oversized) {
+      setErrorMessage("Maximum file size allowed is 500MB.");
+      return;
+    }
+
+    const valid = arrayIncoming.filter(
       (f) => isImage(f) || isVideo(f)
     );
     setFiles((prev) => {

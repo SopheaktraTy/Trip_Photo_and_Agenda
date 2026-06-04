@@ -11,6 +11,11 @@ export async function POST(request) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
+    const MAX_SIZE = 500 * 1024 * 1024; // 500MB
+    if (file.size > MAX_SIZE) {
+      return NextResponse.json({ error: 'File size exceeds the 500MB limit' }, { status: 400 });
+    }
+
     // Check credentials
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
@@ -38,12 +43,8 @@ export async function POST(request) {
 
     const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
-    // Convert Web File to Node.js Readable Stream in MEMORY (Vercel Compatible)
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const stream = new Readable();
-    stream.push(buffer);
-    stream.push(null);
+    // Convert Web File to Node.js Readable Stream (Low memory streaming)
+    const stream = Readable.from(file.stream());
 
     // Upload to Google Drive
     const driveResponse = await drive.files.create({

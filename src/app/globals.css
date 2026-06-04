@@ -2617,7 +2617,7 @@ body {
   gap: 24px;
   align-items: start;
 }
-.pb-upload-col, .pb-gallery-col { position: relative; }
+.pb-upload-col, .pb-gallery-col { position: relative; min-width: 0; }
 
 /* ── Mobile layout: single column with toggle ── */
 @media (max-width: 860px) {
@@ -2854,6 +2854,8 @@ body {
   flex-direction: column;
   gap: 5px;
   margin: -2px 0 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 .file-chip {
   display: flex;
@@ -2864,6 +2866,10 @@ body {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.07);
   transition: border-color 0.2s ease;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 .chip-image { border-left: 3px solid rgba(143,190,107,0.6); }
 .chip-video { border-left: 3px solid rgba(232,168,74,0.7); }
@@ -2871,6 +2877,7 @@ body {
 .chip-image .chip-icon { color: #8fbe6b; }
 .chip-video .chip-icon { color: #e8a84a; }
 .chip-name {
+  display: block;
   flex: 1;
   font-family: 'Karla', sans-serif;
   font-size: 12px;
